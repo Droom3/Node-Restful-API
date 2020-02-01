@@ -8,7 +8,7 @@ server.use(cors());
 server.use(express.json());
 
 server.get('/', (req, res) => {
-    res.json({ message: 'Broom app backend up and running' })
+    res.json({ message: 'Droom app backend up and running' })
 })
 
 module.exports = server;
