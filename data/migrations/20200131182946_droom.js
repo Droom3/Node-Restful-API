@@ -2,10 +2,16 @@ exports.up = function(knex, Promise) {
     return knex.schema
         .createTable('users', tbl => {
             tbl.increments();
+            tbl.string('username', 128)
+                .notNullable()
+                .unique()
+                .index();
+            tbl.string('password')
+                .notNullable();
             tbl.text('firstname', 128)
                 .notNullable();
             tbl.text('lastname', 128)
-                .notNullable();            
+                .notNullable();
             tbl.text('occupation', 255)
                 .notNullable();
             tbl.text('experience', 255);
@@ -13,6 +19,12 @@ exports.up = function(knex, Promise) {
         })
         .createTable('companies', tbl => {
             tbl.increments();
+            tbl.string('username', 128)
+                .notNullable()
+                .unique()
+                .index();
+            tbl.string('password')
+                .notNullable();
             tbl.text('name', 255)
                 .unique()
                 .notNullable();
