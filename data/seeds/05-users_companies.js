@@ -4,7 +4,7 @@ exports.seed = function(knex) {
       // Inserts seed entries
       return knex('users_companies').insert([
         {user_id: 1, company_id: 2 },
-        {user_id: 2, listing_id: 3 }
+        {user_id: 2, company_id: 3 }
       ]);
     });
 };
