@@ -12,7 +12,7 @@ exports.up = function(knex, Promise) {
                 .notNullable();
         })
         .createTable('jobseekers', tbl => {
-            tbl.increments();
+            tbl.primary('user_id');
             tbl.string('first_name', 128)
                 .notNullable();
             tbl.string('last_name', 128)
@@ -23,25 +23,21 @@ exports.up = function(knex, Promise) {
                 .defaultTo('None');
             tbl.string('interest', 255)
                 .defaultTo('None');
-            tbl.integer('user_type')
-                .defaultTo(1);
             tbl.integer('user_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
                 .inTable('users')
                 .onUpdate('CASCADE')
-                .onDelete('CASCADE');
+                .onDelete('CASCADE');    
         })
         .createTable('companies', tbl => {
-            tbl.increments();
+            tbl.primary('user_id');
             tbl.string('company_name', 128)
                 .notNullable()
                 .unique();
             tbl.string('description')
                 .notNullable();
-            tbl.integer('user_type')
-                .defaultTo(2);
             tbl.integer('user_id')
                 .unsigned()
                 .notNullable()
@@ -61,7 +57,7 @@ exports.up = function(knex, Promise) {
             tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
-                .references('id')
+                .references('user_id')
                 .inTable('companies')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
@@ -71,14 +67,14 @@ exports.up = function(knex, Promise) {
             tbl.integer('jobseeker_id')
                 .unsigned()
                 .notNullable()
-                .references('id')
+                .references('user_id')
                 .inTable('jobseekers')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
             tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
-                .references('id')
+                .references('user_id')
                 .inTable('companies');
         })
         .createTable('company_likes', tbl => {
@@ -86,14 +82,14 @@ exports.up = function(knex, Promise) {
             tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
-                .references('id')
+                .references('user_id')
                 .inTable('companies')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
             tbl.integer('jobseeker_id')
                 .unsigned()
                 .notNullable()
-                .references('id')
+                .references('user_id')
                 .inTable('jobseekers');
         })
 };
