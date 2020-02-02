@@ -6,36 +6,58 @@ exports.up = function(knex, Promise) {
                 .notNullable()
                 .unique()
                 .index();
-            tbl.string('password')
+            tbl.string('password', 128)
+                .notNullable()
+            tbl.integer('user_type')
                 .notNullable();
-            tbl.text('firstname', 128)
+        })
+        .createTable('jobseekers', tbl => {
+            tbl.increments();
+            tbl.string('first_name', 128)
                 .notNullable();
-            tbl.text('lastname', 128)
+            tbl.string('last_name', 128)
                 .notNullable();
-            tbl.text('occupation', 255)
-                .notNullable();
-            tbl.text('experience', 255);
-            tbl.text('interest', 255);
+            tbl.string('occupation', 255)
+                .defaultTo('Unemployed');
+            tbl.string('experience', 255)
+                .defaultTo('None');
+            tbl.string('interest', 255)
+                .defaultTo('None');
+            tbl.integer('user_type')
+                .defaultTo(1);
+            tbl.integer('user_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('users')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE');
         })
         .createTable('companies', tbl => {
             tbl.increments();
-            tbl.string('username', 128)
+            tbl.string('company_name', 128)
                 .notNullable()
-                .unique()
-                .index();
-            tbl.string('password')
+                .unique();
+            tbl.string('description')
                 .notNullable();
-            tbl.text('name', 255)
-                .unique()
-                .notNullable();
+            tbl.integer('user_type')
+                .defaultTo(2);
+            tbl.integer('user_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('users')
+                .onUpdate('CASCADE')
+                .onDelete('CASCADE');
         })
-        .createTable('listings', tbl => {
+        .createTable('jobs', tbl => {
             tbl.increments();
-            tbl.text('title', 128)
+            tbl.string('title')
                 .notNullable();
-            tbl.text('description', 1024)
+            tbl.string('description')
                 .notNullable();
-            tbl.string('salary');
+            tbl.string('salary')
+                .defaultTo('Not available');
             tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
@@ -44,30 +66,23 @@ exports.up = function(knex, Promise) {
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
         })
-        .createTable('users_listings', tbl => {
-            tbl.primary(['user_id', 'listing_id']);
-            tbl.integer('user_id')
+        .createTable('jobseeker_likes', tbl => {
+            tbl.primary(['jobseeker_id', 'company_id']);
+            tbl.integer('jobseeker_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('users')
+                .inTable('jobseekers')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
-            tbl.integer('listing_id')
+            tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
                 .references('id')
-                .inTable('listings');
+                .inTable('companies');
         })
-        .createTable('users_companies', tbl => {
-            tbl.primary(['user_id', 'company_id']);
-            tbl.integer('user_id')
-                .unsigned()
-                .notNullable()
-                .references('id')
-                .inTable('users')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE');
+        .createTable('company_likes', tbl => {
+            tbl.primary(['company_id', 'jobseeker_id']);
             tbl.integer('company_id')
                 .unsigned()
                 .notNullable()
@@ -75,14 +90,20 @@ exports.up = function(knex, Promise) {
                 .inTable('companies')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
+            tbl.integer('jobseeker_id')
+                .unsigned()
+                .notNullable()
+                .references('id')
+                .inTable('jobseekers');
         })
 };
 
 exports.down = function(knex, Promise) {
     return knex.schema
         .dropTableIfExists('users')
+        .dropTableIfExists('jobseekers')
         .dropTableIfExists('companies')
-        .dropTableIfExists('listings')
-        .dropTableIfExists('users_listings')
-        .dropTableIfExists('users_companies')
+        .dropTableIfExists('jobs')
+        .dropTableIfExists('jobseeker_likes')
+        .dropTableIfExists('company_likes')
 };
