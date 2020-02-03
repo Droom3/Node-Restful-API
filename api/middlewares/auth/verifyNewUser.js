@@ -1,16 +1,18 @@
-const verifyNewUser = (req, res, next) => {
-    const newUser = req.body;
-    if(!Object.entries(newUser).length) {
-        res.status(400).json({ message: 'invalid action, you must provide new user credentials' })
+const { Roles } = require('../../../data/helpers');
+
+async function verifyNewUser(req, res, next){
+    const { username, password, user_type } = req.body;
+    if(!Object.entries(req.body).length) {
+        return res.status(400).json({ message: 'invalid action, you must provide new user credentials' })
     }
-    if(!newUser.username || !newUser.password || !newUser.user_type) {
-        res.status(400).json({ message: 'you must provide username, password, and user_type' })
+    if(!username || !password || !user_type) {
+        return res.status(400).json({ message: 'you must provide username, password, and user_type' })
     }
-    if(!newUser.username.length || !newUser.password.length) {
-        res.status(400).json({ message: 'username, password must not be blank' })
+    if(!username.length || !password.length) {
+        return res.status(400).json({ message: 'username, password must not be blank' })
     }
-    if(newUser.user_type!==1 || newUser.user_type!==2) {
-        res.status(400).json({ message: 'user_type must be 1 or 2' })
+    if(!await Roles.findBy({ id: user_type })) {
+        return res.status(400).json({ message: 'the given usertype does not exist' })
     }
     next();
 }
