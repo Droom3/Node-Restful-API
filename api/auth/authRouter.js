@@ -42,9 +42,9 @@ router.post('/login', verifyReturnUser, (req, res) => {
 
 function generateToken(user) {
     const payload = {
-        subject: user.id,
+        id: user.id,
         username: user.username,
-        usertype: user.user_type
+        user_type: user.user_type
     };
     const secret = process.env.JWT_SECRET;
     const options = {
