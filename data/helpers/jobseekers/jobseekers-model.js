@@ -1,20 +1,20 @@
-const Users = require('../dbConfig');
+const Jobseekers = require('../../dbConfig');
 
 function find() {
-    return Users('users')
-        .select('id', 'username', 'occupation')
-        .orderBy('id', 'asc');
+    return Jobseekers('jobseekers')
+        .select('user_id', 'first_name', 'last_name', 'occupation', 'experience', 'interest')
+        .orderBy('user_id', 'asc');
 }
 
 function findById(id) {
     const [ids] = id;
-    return Users('users')
+    return Jobseekers('jobseekers')
         .where({ ids })
         .first();
 }
 
 function add(user) {
-    return Users('users')
+    return Jobseekers('jobseekers')
         .insert(user, 'id')
         .then(ids => {
             return findById(ids);
@@ -22,7 +22,7 @@ function add(user) {
 }
 
 function edit(id, changes) {
-    return Users('users')
+    return Jobseekers('jobseekers')
         .where({ id })
         .update(changes, 'id')
         .then(ids => {
