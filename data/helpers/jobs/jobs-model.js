@@ -20,14 +20,6 @@ function add(job) {
         })
 }
 
-// function add(job) {
-//     return Jobs('jobs')
-//         .insert(job, 'id')
-//         .then(() => {
-//             return 'Success'
-//         })
-// }
-
 function edit(id, changes) {
     return Jobs('jobs')
         .where({ id: id })
