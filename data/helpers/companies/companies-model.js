@@ -7,9 +7,8 @@ function find() {
 }
 
 function findById(id) {
-    const [ids] = id;
     return Companies('companies')
-        .where({ ids })
+        .where({ user_id: id })
         .first();
 }
 
