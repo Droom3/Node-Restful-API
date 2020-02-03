@@ -21,16 +21,26 @@ exports.seed = function(knex) {
           user_type: 1
         },
         { id: 4, 
-          username: 'lambdaschool', 
+          username: 'devindias', 
+          password: bcrypt.hashSync('testing123!', 10),
+          user_type: 1
+        },
+        { id: 5, 
+          username: 'tylerthompson', 
+          password: bcrypt.hashSync('testing123!', 10),
+          user_type: 1
+        },
+        { id: 6, 
+          username: 'arahmed', 
           password: bcrypt.hashSync('testing123!', 10),
           user_type: 2
         },
-        { id: 5, 
+        { id: 7, 
           username: 'appleinc', 
           password: bcrypt.hashSync('testing123!', 10),
           user_type: 2
         },
-        { id: 6, 
+        { id: 8, 
           username: 'google', 
           password: bcrypt.hashSync('testing123!', 10),
           user_type: 2

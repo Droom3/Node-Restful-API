@@ -2,7 +2,7 @@ const router = require('express').Router();
 const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 const { Users } = require('../../data/helpers/index');
-const { verifyNewUser } = require('../middlewares/index');
+const { verifyNewUser, verifyReturnUser } = require('../middlewares/index');
 
 router.post('/register', verifyNewUser, (req, res) => {
     const newUser = req.body;
@@ -18,8 +18,26 @@ router.post('/register', verifyNewUser, (req, res) => {
         })
 })
 
-router.post('/login', (req, res) => {
-    res.status(201).json({ message: 'Good Bye friend' })
+router.post('/login', verifyReturnUser, (req, res) => {
+    const { username, password } = req.body;
+    Users
+        .findBy({ username })
+        .then(user => {
+            if(user && bcrypt.compareSync(password, user.password)) {
+                const token = generateToken(user);
+                const response = {
+                    user,
+                    token
+                }
+                res.status(201).json(response)
+            }
+            else {
+                res.status(400).json({ message: 'invalid username or password' })
+            }
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
 })
 
 function generateToken(user) {

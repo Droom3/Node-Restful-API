@@ -6,6 +6,12 @@ function find() {
         .orderBy('id', 'asc');
 }
 
+function findBy(property) {
+    return Users('users')
+        .where(property)
+        .first();
+}
+
 function findById(id) {
     const [ids] = id;
     return Users('users')
@@ -24,6 +30,7 @@ function add(user) {
 
 module.exports = {
     find,
+    findBy,
     findById,
     add
 }
