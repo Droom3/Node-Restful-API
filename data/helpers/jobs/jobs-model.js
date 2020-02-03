@@ -20,14 +20,6 @@ function add(job) {
         })
 }
 
-// function add(job) {
-//     return Jobs('jobs')
-//         .insert(job, 'id')
-//         .then(() => {
-//             return 'Success'
-//         })
-// }
-
 function edit(id, changes) {
     return Jobs('jobs')
         .where({ id: id })
@@ -43,10 +35,25 @@ function remove(id) {
         .del();
 }
 
+// Jobs by company
+function findByCompany(id) {
+    return Jobs('jobs')
+        .where({ company_id: id});
+}
+
+function getCompanyJob(companyId, jobId) {
+    return Jobs('jobs')
+        .where({company_id: companyId, id: jobId})
+        .first();
+}
+
+
 module.exports = {
     find,
     findById,
     add,
     edit,
-    remove
+    remove,
+    findByCompany,
+    getCompanyJob
 }
