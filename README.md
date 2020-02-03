@@ -6,6 +6,8 @@
 
 ### **Authentication Routes**
 
+Server located at: https://shrouded-taiga-50423.herokuapp.com/
+
 ###  **User Registration**:
 
 #### POST */api/register*
