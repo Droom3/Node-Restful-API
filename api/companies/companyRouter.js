@@ -1,6 +1,6 @@
 const router = require('express').Router();
-//const {  } = require('../../data/helpers/index');
-//const {  } = require('../middlewares/index');
+const {  } = require('../../data/helpers/index');
+const {  } = require('../middlewares/index');
 
 // Return a list of all companies profiles, available to all users
 router.get('api/companies', (req, res) => {
