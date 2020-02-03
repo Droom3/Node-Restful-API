@@ -1,10 +1,17 @@
 const router = require('express').Router();
-//const {  } = require('../../data/helpers/index');
-//const {  } = require('../middlewares/index');
+const { Jobs } = require('../../data/helpers/index');
+const { validateToken } = require('../middlewares/index');
 
 // Returns all jobs, available to all users
-router.get('/', (req, res) => {
-
+router.get('/', validateToken, (req, res) => {
+    Jobs
+        .find()
+        .then(jobs => {
+            res.status(200).json(jobs)
+        })
+        .catch(err => {
+            res.status(500).json(err);
+        })
 })
 
 module.exports = router;
