@@ -1,5 +1,5 @@
 const router = require('express').Router();
-const { Jobs } = require('../../data/helpers/index');
+const { Jobs, Jobseekers, Companies } = require('../../data/helpers/index');
 const { validateToken } = require('../middlewares/index');
 
 // Returns all jobs, available to all users
