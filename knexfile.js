@@ -16,5 +16,20 @@ module.exports = {
         conn.run('PRAGMA foreign_keys = ON', done);
       }
     }
+  },
+
+  production: {
+    client: 'pg',
+    connection: process.env.SERVER_URL,
+    pool: {
+      min: 2,
+      max: 20
+    },
+    migrations: {
+      directory: './data/migrations'
+    },
+    seeds: {
+      directory: './data/seeds'
+    }
   }
 };
