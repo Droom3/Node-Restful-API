@@ -85,16 +85,16 @@ exports.up = function(knex, Promise) {
 
 exports.down = function(knex, Promise) {
     return knex.schema
-        // .raw('drop table if exists users cascade;')
-        // .raw('drop table if exists jobseekers cascade;')
-        // .raw('drop table if exists companies cascade;')
-        // .raw('drop table if exists jobs cascade;')
-        // .raw('drop table if exists likes cascade;')
-        // .raw('drop table if exists roles cascade;')
-        .dropTableIfExists('users')
-        .dropTableIfExists('jobseekers')
-        .dropTableIfExists('companies')
-        .dropTableIfExists('jobs')
-        .dropTableIfExists('likes')
-        .dropTableIfExists('roles')
+        .raw('drop table if exists users cascade;')
+        .raw('drop table if exists jobseekers cascade;')
+        .raw('drop table if exists companies cascade;')
+        .raw('drop table if exists jobs cascade;')
+        .raw('drop table if exists likes cascade;')
+        .raw('drop table if exists roles cascade;')
+        // .dropTableIfExists('users')
+        // .dropTableIfExists('jobseekers')
+        // .dropTableIfExists('companies')
+        // .dropTableIfExists('jobs')
+        // .dropTableIfExists('likes')
+        // .dropTableIfExists('roles')
 }; 
