@@ -62,36 +62,20 @@ exports.up = function(knex, Promise) {
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
         })
-        .createTable('jobseeker_likes', tbl => {
-            tbl.primary(['jobseeker_id', 'company_id']);
-            tbl.integer('jobseeker_id')
+        .createTable('likes', tbl => {
+            tbl.increments();
+            tbl.integer('user')
                 .unsigned()
                 .notNullable()
-                .references('user_id')
-                .inTable('jobseekers')
+                .references('id')
+                .inTable('users')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
-            tbl.integer('company_id')
+            tbl.integer('user_likes')
                 .unsigned()
-                .notNullable()
-                .references('user_id')
-                .inTable('companies');
+                .notNullable();
         })
-        .createTable('company_likes', tbl => {
-            tbl.primary(['company_id', 'jobseeker_id']);
-            tbl.integer('company_id')
-                .unsigned()
-                .notNullable()
-                .references('user_id')
-                .inTable('companies')
-                .onUpdate('CASCADE')
-                .onDelete('CASCADE');
-            tbl.integer('jobseeker_id')
-                .unsigned()
-                .notNullable()
-                .references('user_id')
-                .inTable('jobseekers');
-        })
+
 };
 
 exports.down = function(knex, Promise) {
@@ -100,6 +84,5 @@ exports.down = function(knex, Promise) {
         .dropTableIfExists('jobseekers')
         .dropTableIfExists('companies')
         .dropTableIfExists('jobs')
-        .dropTableIfExists('jobseeker_likes')
-        .dropTableIfExists('company_likes')
-};
+        .dropTableIfExists('likes')
+}; 
