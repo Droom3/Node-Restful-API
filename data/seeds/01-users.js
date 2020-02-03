@@ -1,7 +1,7 @@
 const bcrypt = require('bcryptjs');
 
 exports.seed = function(knex) {
-  return knex('users').truncate()
+  return knex('users')
     .then(function () {
       // Inserts seed entries
       return knex('users').insert([
