@@ -16,9 +16,17 @@ function add(job) {
     return Jobs('jobs')
         .insert(job, 'id')
         .then(ids => {
-            return findById(ids);
-        });
+            return findById(ids)
+        })
 }
+
+// function add(job) {
+//     return Jobs('jobs')
+//         .insert(job, 'id')
+//         .then(() => {
+//             return 'Success'
+//         })
+// }
 
 function edit(id, changes) {
     return Jobs('jobs')

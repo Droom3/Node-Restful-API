@@ -1,3 +1,8 @@
+const pgUser = process.env.PG_USER || 'jonathan';
+const pgDb = process.env.PG_DB || 'oldamerica';
+
+const prodConnection = `postgres://${pgUser}@localhost/${pgDb}`;
+
 module.exports = {
   development: {
     client: 'sqlite3',
@@ -20,7 +25,7 @@ module.exports = {
 
   production: {
     client: 'pg',
-    connection: process.env.DATABASE_URL,
+    connection: process.env.DATABASE_URL || prodConnection,
     pool: {
       min: 2,
       max: 20
@@ -33,3 +38,4 @@ module.exports = {
     }
   }
 };
+
