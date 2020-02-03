@@ -90,4 +90,5 @@ exports.down = function(knex, Promise) {
         .dropTableIfExists('companies')
         .dropTableIfExists('jobs')
         .dropTableIfExists('likes')
+        .dropTableIfExists('roles')
 }; 
