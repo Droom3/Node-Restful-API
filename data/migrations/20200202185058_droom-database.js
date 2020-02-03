@@ -75,7 +75,12 @@ exports.up = function(knex, Promise) {
                 .unsigned()
                 .notNullable();
         })
-
+        .createTable('roles', tbl => {
+            tbl.increments();
+            tbl.string('name', 128)
+              .unique()
+              .notNullable();
+          })
 };
 
 exports.down = function(knex, Promise) {
@@ -85,4 +90,5 @@ exports.down = function(knex, Promise) {
         .dropTableIfExists('companies')
         .dropTableIfExists('jobs')
         .dropTableIfExists('likes')
+        .dropTableIfExists('roles')
 }; 

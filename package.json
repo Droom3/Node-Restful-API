@@ -1,18 +1,18 @@
 {
-  "name": "droom-backend",
+  "name": "droom-server",
   "version": "1.0.0",
-  "description": "Backend api for Droom ",
+  "description": "Express server for Droom",
   "main": "index.js",
   "scripts": {
     "start": "node index.js",
     "server": "nodemon index.js",
-    "db:seed": "knex seed:run"
+    "test": "cross-env DB_ENV=test jest --watch"
   },
   "repository": {
     "type": "git",
     "url": "git+https://github.com/Droom3/Backend-API.git"
   },
-  "author": "Jonathan Chen, Jonah Aitchison",
+  "author": "Jonathan Chen",
   "license": "ISC",
   "bugs": {
     "url": "https://github.com/Droom3/Backend-API/issues"
@@ -27,9 +27,13 @@
     "jsonwebtoken": "^8.5.1",
     "knex": "^0.20.8",
     "knex-cleaner": "^1.3.0",
-    "sqlite3": "^4.1.1"
+    "pg": "^7.18.1"
   },
   "devDependencies": {
-    "nodemon": "^2.0.2"
+    "cross-env": "^7.0.0",
+    "jest": "^25.1.0",
+    "nodemon": "^2.0.2",
+    "sqlite3": "^4.1.1",
+    "supertest": "^4.0.2"
   }
 }
