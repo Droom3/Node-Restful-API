@@ -11,7 +11,7 @@ server.use(helmet());
 server.use(cors());
 server.use(express.json());
 server.use('/api', authRouter);
-// server.use('/api/users', usersRouter);
+server.use('/api/users', usersRouter);
 server.use('/api/companies', companiesRouter);
 // server.use('/api/matches', matchesRouter);
 

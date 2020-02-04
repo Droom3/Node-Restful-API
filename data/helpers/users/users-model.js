@@ -28,14 +28,12 @@ function add(user) {
         });
 }
 
-function edit(id, changes) {
-    return Users('users')
+async function edit(id, changes) {
+    await Users('users')
         .where({ id })
-        .update(changes, 'id')
-        .then(ids => {
-            const [id] = ids;
-            return findById(id);
-        });
+        .update(changes);
+    
+    return findById(id);
 }
 
 function remove(id) {
