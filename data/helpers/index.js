@@ -1,11 +1,9 @@
-const Jobseekers = require('./jobseekers/jobseekers-model');
-const Companies = require('./companies/companies-model');
 const Users = require('./users/users-model');
-const Roles = require('./roles/roles-model');
+const Companies = require('./companies/companies-model');
+const Matches = require('./matches/matches-model');
 
 module.exports = {
     Users,
-    Jobseekers,
     Companies,
-    Roles
+    Matches
 }

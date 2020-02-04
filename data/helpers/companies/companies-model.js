@@ -2,13 +2,14 @@ const Companies = require('../../dbConfig');
 
 function find() {
     return Companies('companies')
-        .select('user_id', 'company_name', 'description')
-        .orderBy('user_id', 'asc');
+        .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
+        .orderBy('id', 'asc');
 }
 
 function findById(id) {
     return Companies('companies')
-        .where({ user_id: id })
+        .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
+        .where({ id })
         .first();
 }
 
@@ -29,9 +30,16 @@ function edit(id, changes) {
         });
 }
 
+function remove(id) {
+    return Companies('companies')
+        .where({ id })
+        .del()
+}
+
 module.exports = {
     find,
     findById,
     add,
-    edit
+    edit,
+    remove
 }
