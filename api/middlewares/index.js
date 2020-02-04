@@ -1,12 +1,15 @@
+// Auth middlewares
 const verifyNewUser = require('./auth/verifyNewUser');
 const verifyReturnUser = require('./auth/verifyReturnUser');
 const verifyNewCompany = require('./auth/verifyNewCompany')
 const verifyUniqueName = require('./auth/verifyUniqueName');
 const validateToken = require('./auth/validateToken');
+// Company middlewares
 const checkIsCompany = require('./companies/checkIsCompany');
 const validateCompanyId = require('./companies/validateCompanyId');
 const validateCompanyOwner = require('./companies/validateCompanyOwner');
 const validateCompanyChanges = require('./companies/validateChanges');
+// User middlewares
 
 module.exports = {
     verifyNewUser,
@@ -14,8 +17,8 @@ module.exports = {
     verifyReturnUser,
     verifyUniqueName,
     validateToken,
-    checkIsCompany,
-    validateCompanyId,
-    validateCompanyOwner,
-    validateCompanyChanges
+    checkIsCompany, // Company only
+    validateCompanyId, // Company only
+    validateCompanyOwner, // Company only
+    validateCompanyChanges // Company only
 }
