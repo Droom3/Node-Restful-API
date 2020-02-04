@@ -141,6 +141,19 @@ Response:
 ```javascript
 // Nothing for now, work in progress
 ```
+#### PUT *api/users/:id*
+
+Updating an user profile. You must be logged in as owner of the user account.
+You cannot modify id, username, password, or user_type
+
+Request:
+```javascript
+// No input needed
+```
+Response:
+```javascript
+// Nothing for now, work in progress
+```
 
 ## **Company Routes**
 [back to top](#api-user-guide)
@@ -212,6 +225,27 @@ Response:
     "mission_statement": "Revolutionazing education. Your new career starts here.",
     "imgUrl": "",
     "openPositions": "Teachers, Developers"
+}
+```
+
+#### PUT *api/companies/:id*
+
+Updating a company profile. You must be logged in as owner of the company.
+You cannot modify id, username, password, or user_type
+
+Request:
+```javascript
+// No input needed
+```
+Response:
+```javascript
+{
+    "company_name": "Lambda School", // required
+    "description": "Testing a random description here", // required
+    "industry": "Education", // optional
+    "mission_statement": "Revolutionazing education. Your new career starts here.", // optional
+    "imgUrl": "", // optional
+    "openPositions": "Teachers, Developers" // optional
 }
 ```
 

@@ -28,14 +28,10 @@ function add(user) {
         });
 }
 
-function edit(id, changes) {
-    return Users('users')
-        .where({ id })
-        .update(changes, 'id')
-        .then(ids => {
-            const [id] = ids;
-            return findById(id);
-        });
+const change = async (id, changes) => {
+    console.log(changes);
+    await findById(id).update(changes);
+    return findById(id);
 }
 
 function remove(id) {
@@ -49,6 +45,6 @@ module.exports = {
     findByUsername,
     findById,
     add,
-    edit,
+    change,
     remove
 }

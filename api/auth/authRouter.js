@@ -37,38 +37,40 @@ router.post('/register/company', verifyNewCompany, verifyUniqueName, (req, res) 
 router.post('/login', verifyReturnUser, (req, res) => {
     const { username, password } = req.body;
 
-    Users.findByUsername(username).then(user => {
-        if(user) {
-            if(bcrypt.compareSync(password, user.password)) {
-                const token = generateToken(user);
-                const response = {
-                    user,
-                    token
-                }
-            res.status(201).json(response)
-            }
-            else {
-                res.status(400).json({ message: 'invalid username or password' })
-            }
-        }
-        else {
-            Companies.findByUsername(username).then(company => {
-                if(company) {
-                    if(bcrypt.compareSync(password, company.password)) {
-                        const token = generateToken(company);
-                        const response = {
-                            company,
-                            token
-                        }
-                    res.status(201).json(response)
+    Users.findByUsername(username)
+        .then(user => {
+            if(user) {
+                if(bcrypt.compareSync(password, user.password)) {
+                    const token = generateToken(user);
+                    const response = {
+                        user,
+                        token
                     }
+                    res.status(200).json(response)
                 }
                 else {
                     res.status(400).json({ message: 'invalid username or password' })
                 }
-            })
+            }
+            else {
+                Companies.findByUsername(username).then(company => {
+                    if(company) {
+                        if(bcrypt.compareSync(password, company.password)) {
+                            const token = generateToken(company);
+                            const response = {
+                                company,
+                                token
+                            }
+                        res.status(201).json(response)
+                        }
+                    }
+                    else {
+                        res.status(400).json({ message: 'invalid username or password' })
+                    }
+                })
+            }
         }
-    })
+    )
     .catch(err => {
         res.status(500).json({ message: 'internal server error', err })
     })
