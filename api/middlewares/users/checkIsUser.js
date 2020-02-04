@@ -4,7 +4,7 @@ function checkIsUser(req, res, next) {
         next();
     }
     else {
-        res.status(400).json({ message: 'you are not a user or jobseeker' })
+        res.status(400).json({ message: 'you are not a user or jobseeker', stuff: parseInt(user_type) })
     }
 }
 
