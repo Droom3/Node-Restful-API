@@ -2,21 +2,20 @@ const Users = require('../../dbConfig');
 
 function find() {
     return Users('users')
-        .select('id', 'username', 'user_type')
+        .select('id', 'username', 'user_type', 'name', 'experience', 'industry', 'imgUrl')
         .orderBy('id', 'asc');
 }
 
-function findBy(property) {
+function findById(id) {
     return Users('users')
-        .where(property)
+        .select('id', 'username', 'user_type', 'name', 'experience', 'industry', 'imgUrl')
+        .where({ id: id })
         .first();
 }
 
-function findById(id) {
-    const [ids] = id;
+function findByUsername(property) {
     return Users('users')
-        .select('id', 'username', 'user_type')
-        .where({ id: ids })
+        .where({ username: property })
         .first();
 }
 
@@ -24,13 +23,32 @@ function add(user) {
     return Users('users')
         .insert(user, 'id')
         .then(ids => {
-            return findById(ids);
+            const [id] = ids;
+            return findById(id);
         });
+}
+
+function edit(id, changes) {
+    return Users('users')
+        .where({ id })
+        .update(changes, 'id')
+        .then(ids => {
+            const [id] = ids;
+            return findById(id);
+        });
+}
+
+function remove(id) {
+    return Users('users')
+        .where({ id })
+        .del()
 }
 
 module.exports = {
     find,
-    findBy,
+    findByUsername,
     findById,
-    add
+    add,
+    edit,
+    remove
 }

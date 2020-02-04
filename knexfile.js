@@ -1,5 +1,5 @@
 const pgUser = process.env.PG_USER || 'jonathan';
-const pgDb = process.env.PG_DB || 'oldamerica';
+const pgDb = process.env.PG_DB || 'droom';
 
 const prodConnection = `postgres://${pgUser}@localhost/${pgDb}`;
 

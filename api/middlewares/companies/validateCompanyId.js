@@ -10,7 +10,7 @@ function validateCompanyId(req, res, next) {
                 next();
             }
             else {
-                res.status(400).json({ message: 'selected id does not exist' })
+                res.status(400).json({ message: 'company with this id does not exist' })
             }
         })
         .catch(err => {

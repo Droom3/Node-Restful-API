@@ -1,6 +1,6 @@
 const jwt = require('jsonwebtoken');
 
-function validateToken(req, res, next) {
+module.exports = (req, res, next) => {
     const { authorization } = req.headers;
     const secret = process.env.JWT_SECRET;
     if(!authorization) {
@@ -15,6 +15,4 @@ function validateToken(req, res, next) {
             next();
         }
     })
-}
-
-module.exports = validateToken;
+};

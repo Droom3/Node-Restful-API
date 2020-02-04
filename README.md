@@ -3,44 +3,89 @@
 |**Table of Contents:**|
 |-|
 |[Authentication Routes](#Authentication-Routes)|
-|[Jobseeker Routes](#Jobseeker-Routes)|
+|[User Routes](#User-Routes)|
 |[Company Routes](#Company-Routes)|
-|[Job Routes](#Job-Routes)|
+|[Match Routes](#Match-Routes)|
 
 ### **Authentication Routes**
 
-Server located at: https://shrouded-taiga-50423.herokuapp.com/
+Server located at: https://dry-mesa-00229.herokuapp.com/
 
 ###  **User Registration**:
 
-#### POST */api/register*
+#### POST */api/register/user*
 
-Creates a new user account.
+Creates a new user (who is a jobseeker) account.
 Returns an object with user info.
 
 Request:
 ```javascript
 {
-  username: "testinguser1", // string (required) 
+  username: "testinguser1", // string (required), must be unique
   password: "testing123!", // string (required) [ 8-20 total characters | min. 1 special character | min. 1 digit | min. 1 letter]
-  user_type: 1 // integer (required) [ must be a valid role id, 1 for jobseeker or 2 for company]
+  user_type: 1, // integer (required) [ must be a valid role id, 1 for jobseeker or 2 for company]
+  name: "Test User", // string (required)
+  experience: "", // string (optional)
+  industry: "", //string (optional)
+  imgUrl: "" // string (optional)
 }
 ```
 Response:
 
 ```javascript
 {
-    "id": 9,
-    "username": "testinguser1",
-    "user_type": 1
+    "id": 6,
+    "username": "testinguser5",
+    "user_type": true, // Boolean of 1
+    "name": "Test User",
+    "experience": null,
+    "industry": null,
+    "imgUrl": null
 }
 ```
 
-### **User Login** 
+###  **Company Registration**:
+
+#### POST */api/register/company*
+
+Creates a new company account.
+Returns an object with company info.
+
+Request:
+```javascript
+{
+  username: "somecompany", // string (required), must be unique
+  password: "testing123!", // string (required) [ 8-20 total characters | min. 1 special character | min. 1 digit | min. 1 letter]
+  user_type: 0, // integer (required) [ must be a valid role id, 1 for jobseeker or 2 for company]
+  company_name: "Some Company", // string (required), must be unique
+  description: "This is a placeholding company" // string (required)
+  industry: "", // string (optional)
+  mission_statement: "", //string (optional)
+  imgUrl: "" // string (optional),
+  openPositions: "" // string (optional)
+}
+```
+Response:
+
+```javascript
+{
+    "id": 12,
+    "username": "somecompany",
+    "user_type": false, // Boolean of 0
+    "company_name": "Some Company",
+    "description": "This is a placeholding company",
+    "industry": "",
+    "mission_statement": "",
+    "imgUrl": "",
+    "openPositions": ""
+}
+```
+
+### **User/Company Login** 
 [back to top](#api-user-guide)
 #### POST */api/login*
 
-Validates user's credentials.
+Validates user's or company's credentials.
 Returns an object with user info and a JSON web token.
 
 Request:
@@ -57,57 +102,23 @@ Response:
     "user": {
         "id": 1,
         "username": "jonathanchen",
-        "password": "$2a$10$TAfh8Lz3i8HiSCdmwA0bCuWhxKy4qxQbBE.AsyTF8aqdlmWEpyXb.",
-        "user_type": 1
+        "password": "$2a$10$YPwUvaR8euT0fxQDCXPKBerk8YFLZWj.y.cuFB4UAFI3ZxCdKJiqW",
+        "user_type": true,
+        "name": "Jonathan Chen",
+        "experience": "Buidling some terminal game from Java",
+        "industry": "Technology",
+        "imgUrl": ""
     },
-    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJqb25hdGhhbmNoZW4iLCJ1c2VyX3R5cGUiOjEsImlhdCI6MTU4MDczOTA5MiwiZXhwIjoxNTgwNzQyNjkyfQ.ytsHPvIFDlC0DxpZBY1meYnAEzvlwf1ml6VquV5dNRk"
+    "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJqb25hdGhhbmNoZW4iLCJ1c2VyX3R5cGUiOnRydWUsImlhdCI6MTU4MDgzODEwOCwiZXhwIjoxNTgwODQxNzA4fQ.9OM5MC6Ekel0H3ibvQs6ceX-SgUEPqs7IbFScrZ9q-M"
 }
 ```
 
-## **Jobseeker Routes**
+## **User Routes**
 [back to top](#api-user-guide)
 
-#### GET *api/jobseekers*
+#### GET *api/users*
 
-Returns an array of jobseekers. Available to all users.
-
-Request:
-```javascript
-// No input needed
-```
-Response:
-```javascript
-[
-    {
-        "user_id": 1,
-        "first_name": "Jonathan",
-        "last_name": "Chen",
-        "occupation": "Student",
-        "experience": "Years of Java programming",
-        "interest": "Coding, cooking, backpacking"
-    },
-    {
-        "user_id": 2,
-        "first_name": "Jonah",
-        "last_name": "Aitchison",
-        "occupation": "Student",
-        "experience": "Cold Fusion Developer",
-        "interest": ""
-    },
-    {
-        "user_id": 3,
-        "first_name": "Devin",
-        "last_name": "Dias",
-        "occupation": "Team Lead",
-        "experience": "Team lead at Lambda School",
-        "interest": ""
-    }
-]
-```
-
-#### GET *api/jobseekers/:id*
-
-Return a jobseeker object at the specified id
+Returns an array of users(jobseekers). Available to all users.
 
 Request:
 ```javascript
@@ -115,14 +126,20 @@ Request:
 ```
 Response:
 ```javascript
-{
-    "first_name": "Jonathan",
-    "last_name": "Chen",
-    "occupation": "Student",
-    "experience": "Years of Java programming",
-    "interest": "Coding, cooking, backpacking",
-    "user_id": 1
-}
+// Nothing for now, work in progress
+```
+
+#### GET *api/users/:id*
+
+Return a jobseeker object at the specified id.
+
+Request:
+```javascript
+// No input needed
+```
+Response:
+```javascript
+// Nothing for now, work in progress
 ```
 
 ## **Company Routes**
@@ -140,26 +157,44 @@ Response:
 ```javascript
 [
     {
-        "user_id": 4,
+        "id": 1,
+        "username": "lambdaschool",
+        "user_type": false,
         "company_name": "Lambda School",
-        "description": "A new way of schooling"
+        "description": "Testing a random description here",
+        "industry": "Education",
+        "mission_statement": "Revolutionazing education. Your new career starts here.",
+        "imgUrl": "",
+        "openPositions": "Teachers, Developers"
     },
     {
-        "user_id": 5,
-        "company_name": "Apple Inc.",
-        "description": "Creating the best products for you"
+        "id": 2,
+        "username": "apple",
+        "user_type": false,
+        "company_name": "Apple Inc",
+        "description": "Creating the best products for you",
+        "industry": "Technology",
+        "mission_statement": "Make your wallet bleed.",
+        "imgUrl": "",
+        "openPositions": "Developers, Desginers"
     },
     {
-        "user_id": 6,
-        "company_name": "Google",
-        "description": "The future is forged here"
+        "id": 3,
+        "username": "google",
+        "user_type": false,
+        "company_name": "Google Inc",
+        "description": "Testing a random description here, another one",
+        "industry": "Technology",
+        "mission_statement": "Organize the world's information.",
+        "imgUrl": "",
+        "openPositions": "Engineers"
     }
 ]
 ```
 
 #### GET *api/companies/:id*
 
-Return a jobseeker object at the specified id
+Return a company object at the specified id
 
 Request:
 ```javascript
@@ -168,18 +203,24 @@ Request:
 Response:
 ```javascript
 {
+    "id": 1,
+    "username": "lambdaschool",
+    "user_type": false,
     "company_name": "Lambda School",
-    "description": "A new way of schooling",
-    "user_id": 4
+    "description": "Testing a random description here",
+    "industry": "Education",
+    "mission_statement": "Revolutionazing education. Your new career starts here.",
+    "imgUrl": "",
+    "openPositions": "Teachers, Developers"
 }
 ```
 
-## **Job Routes**
+## **Match Routes**
 [back to top](#api-user-guide)
 
-#### GET *api/jobs*
+#### POST *api/matches/:id/likes*
 
-Returns an array of jobs across the system. Available to all users.
+Adding a user or company to your liked list
 
 Request:
 ```javascript
@@ -187,48 +228,5 @@ Request:
 ```
 Response:
 ```javascript
-[
-    {
-        "id": 1,
-        "title": "Assistant Instructor",
-        "description": "Helps students with web dev materials",
-        "salary": "65000 usd/year",
-        "company_id": 4
-    },
-    {
-        "id": 2,
-        "title": "Software Engineer I",
-        "description": "You will be using Python to work on projects",
-        "salary": "135000 usd/year",
-        "company_id": 5
-    },
-    {
-        "id": 3,
-        "title": "Tech Lead",
-        "description": "A typical tech lead",
-        "salary": "247000 usd/year",
-        "company_id": 5
-    },
-    {
-        "id": 4,
-        "title": "UI Designer",
-        "description": "Designing awesome features",
-        "salary": "97500 usd/year",
-        "company_id": 5
-    },
-    {
-        "id": 5,
-        "title": "Data Scientist",
-        "description": "Design statistical models to bring data to life",
-        "salary": "217500 usd/year",
-        "company_id": 6
-    },
-    {
-        "id": 6,
-        "title": "Machine Learning Engineer",
-        "description": "Using big data to change lives",
-        "salary": "177500 usd/year",
-        "company_id": 6
-    }
-]
+// No response yet, work in progress
 ```
