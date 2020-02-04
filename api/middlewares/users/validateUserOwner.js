@@ -6,7 +6,7 @@ function validateUserOwner(req, res, next) {
         next();
     }
     else {
-        res.status(400).json({ message: 'you are not owner of this company' })
+        res.status(400).json({ message: 'you are not owner of this user account' })
     }
 }
 
