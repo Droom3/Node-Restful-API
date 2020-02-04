@@ -16,7 +16,12 @@ router.get('/', validateToken, (req, res) => {
 
 // Post a jobseeker profile to list, available to jobseekers only
 router.post('/', (req, res) => {
+    const newSeeker = req.body; 
 
+    Jobseekers
+        .add(newSeeker)
+        .then(result => res.status(201).json(result))
+        .catch(err => res.status(500).json({ message: 'failed to add jobseeker', err}));
 })
 
 // Return a specific jobseeker profile at id, available to all users
@@ -34,7 +39,13 @@ router.get('/:id', validateToken, validateJobseekerId, (req, res) => {
 
 // Update a jobseeker profile, available to owner of the profile only
 router.put('/:id', (req, res) => {
+    const ids = req.params.id;
+    const changes = req.body;
 
+    Jobseekers
+        .edit(ids, changes)
+        .then(result => res.status(204).json({ message: 'jobseeker updated.'}))
+        ``
 })
 
 // Return all likes for this jobseeker, available to owner of the profile id only
