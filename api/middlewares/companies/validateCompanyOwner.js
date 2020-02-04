@@ -1,12 +1,12 @@
-// const { Users } = require('../../../data/helpers/index');
+// const { Companies } = require('../../../data/helpers/index');
 
-// function validateOwnership(req, res, next) {
-//     const user_id = parseInt(req.decoded_token.id);
+// function validateCompanyOwner(req, res, next) {
+//     const user_type = parseInt(req.decoded_token.id);
 //     const param_id = parseInt(req.params.id);
 
-//     Users
+//     Companies
 //         .findById(param_id)
-//         .then(user => {
+//         .then(company => {
 //             if(user.id === user_id) {
 //                 next();
 //             }

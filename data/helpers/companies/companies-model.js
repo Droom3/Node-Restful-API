@@ -15,7 +15,7 @@ function findByUsername(property) {
 function findById(id) {
     return Companies('companies')
         .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
-        .where({ id })
+        .where({ id: id })
         .first();
 }
 
