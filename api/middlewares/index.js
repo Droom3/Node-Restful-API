@@ -10,6 +10,7 @@ const validateCompanyId = require('./companies/validateCompanyId');
 const validateCompanyOwner = require('./companies/validateCompanyOwner');
 const validateCompanyChanges = require('./companies/validateChanges');
 // User middlewares
+const validateIamUser = require('./users/validateIamUser');
 
 module.exports = {
     verifyNewUser,
@@ -20,5 +21,6 @@ module.exports = {
     checkIsCompany, // Company only
     validateCompanyId, // Company only
     validateCompanyOwner, // Company only
-    validateCompanyChanges // Company only
+    validateCompanyChanges, // Company only
+    validateIamUser
 }

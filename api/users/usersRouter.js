@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Users } = require('../../data/helpers/index');
-const { validateToken } = require('../middlewares/index');
+const { validateToken, validateIamUser } = require('../middlewares/index');
 
 // Return a list of all user profiles, available to all users
 router.get('/', validateToken, (req, res) => {
@@ -28,8 +28,14 @@ router.get('/:id', validateToken, (req, res) => {
 })
 
 // Update a user profile, available to owner of the profile only
-router.put('/:id', (req, res) => {
+router.put('/:id', validateToken, validateIamUser, (req, res) => {
+    const ids = req.params.id;
+    const changes = req.body;
 
+    Users
+        .edit(ids, changes)
+        .then(result => res.status(200).json(result))
+        .catch(err => res.status(500).json({ message: 'failed to update user.', err}))
 })
 
 // Return all likes for this user, available to owner of the profile id only
