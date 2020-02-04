@@ -13,7 +13,7 @@ server.use(express.json());
 server.use('/api', authRouter);
 server.use('/api/users', usersRouter);
 server.use('/api/companies', companiesRouter);
-// server.use('/api/matches', matchesRouter);
+server.use('/api/matches', matchesRouter);
 
 server.get('/', (req, res) => {
     res.json({ message: 'Droom app backend up and running' })
