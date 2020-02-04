@@ -39,6 +39,10 @@ exports.up = function(knex, Promise) {
                 .inTable('companies')
                 .onUpdate('CASCADE')
                 .onDelete('CASCADE');
+            tbl.integer('initiated_by')
+                .unsigned()
+                .notNullable()
+                .defaultTo(0);
         })
 };
 

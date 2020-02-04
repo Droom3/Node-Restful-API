@@ -50,14 +50,13 @@ router.put('/:id', validateToken, checkIsCompany, validateCompanyId, validateCom
 
 // Return all likes for this company, available to owner of the profile id only
 // Don't work on this yet, still thinking about its specifics
-router.get('/:id/likes', (req, res) => {
+// When I request all my likes, it should return my likes' user_id
+router.get('/:id/likes', validateToken, checkIsCompany, validateCompanyId, validateCompanyOwner, (req, res) => {
     const ids = req.params.id;
 })
 
-// Like a specific company, available to all users
-// Don't work on this yet, still thinking about its specifics
-router.post('/:id/likes', (req, res) => {
-    const ids = req.params.id;
-})
 
+router.delete('/:id/likes/:user_id', validateToken, checkIsCompany, validateCompanyId, validateCompanyOwner, (req, res) => {
+
+})
 module.exports = router;
