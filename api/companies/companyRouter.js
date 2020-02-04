@@ -41,7 +41,12 @@ router.put('/:id', validateToken, checkIsCompany, validateCompanyId, validateCom
     Companies
         .change(ids, companyUpdates)
         .then(result => {
-            res.status(200).json(result)
+            if(result) {
+                res.status(200).json(result)
+            }
+            else {
+                res.status(400).json({ message: 'no company corresponding to this id' })
+            }
         })
         .catch(err => {
             res.status(500).json({ message: 'failed to update company profile', err})

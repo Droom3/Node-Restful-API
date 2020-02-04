@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Users } = require('../../data/helpers/index');
-const { validateToken } = require('../middlewares/index');
+const { validateToken, checkIsUser, validateUserId, validateUserOwner, validateUserChanges } = require('../middlewares/index');
 
 // Return a list of all user profiles, available to all users
 router.get('/', validateToken, (req, res) => {
@@ -20,7 +20,12 @@ router.get('/:id', validateToken, (req, res) => {
     Users
         .findById(ids)
         .then(result => {
-            res.status(200).json(result)
+            if(result) {
+                res.status(200).json(result)
+            }
+            else {
+                res.status(400).json({ message: 'no user corresponding to this id' })
+            }    
         })
         .catch(err => {
             res.status(500).json({ message: 'failed to get user at this id', err })
@@ -28,8 +33,20 @@ router.get('/:id', validateToken, (req, res) => {
 })
 
 // Update a user profile, available to owner of the profile only
-router.put('/:id', (req, res) => {
-
+router.put('/:id', validateToken, checkIsUser, validateUserId, validateUserOwner, validateUserChanges, (req, res) => {
+    const ids = req.params.id;
+    const changes = req.body;
+    Users
+        .change(ids, changes)
+        .then(result => {
+            if(result) {
+                res.status(200).json(result)
+            }
+            else {
+                res.status(400).json({ message: 'no user corresponding to this id' })
+            }
+        })
+        .catch(err => res.status(500).json({ message: 'failed to update user.', err}))
 })
 
 // Return all likes for this user, available to owner of the profile id only
