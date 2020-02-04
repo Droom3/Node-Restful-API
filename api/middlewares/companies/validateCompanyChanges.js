@@ -1,6 +1,6 @@
-function validateChanges(req, res, next) {
-    const { id, username, password, user_type, company_name, description } = req.body;
-    if(username || password || id || user_type) {
+function validateCompanyChanges(req, res, next) {
+    const { id, username, password, company_name, description } = req.body;
+    if(username || password || id || 'user_type' in req.body ) {
         return res.status(400).json({ message: 'you cannot modify id, username, user_type, or password' })
     }
     if(!Object.entries(company_name) || !Object.entries(description)) {
@@ -14,4 +14,4 @@ function validateChanges(req, res, next) {
     }
 }
 
-module.exports = validateChanges;
+module.exports = validateCompanyChanges;

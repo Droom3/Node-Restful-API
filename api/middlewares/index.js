@@ -8,9 +8,12 @@ const validateToken = require('./auth/validateToken');
 const checkIsCompany = require('./companies/checkIsCompany');
 const validateCompanyId = require('./companies/validateCompanyId');
 const validateCompanyOwner = require('./companies/validateCompanyOwner');
-const validateCompanyChanges = require('./companies/validateChanges');
+const validateCompanyChanges = require('./companies/validateCompanyChanges');
 // User middlewares
-const validateIamUser = require('./users/validateIamUser');
+const checkIsUser = require('./users/checkIsUser');
+const validateUserId = require('./users/validateUserId');
+const validateUserOwner = require('./users/validateUserOwner');
+const validateUserChanges = require('./users/validateUserChanges');
 
 module.exports = {
     verifyNewUser,
@@ -22,5 +25,8 @@ module.exports = {
     validateCompanyId, // Company only
     validateCompanyOwner, // Company only
     validateCompanyChanges, // Company only
-    validateIamUser
+    checkIsUser, // User only
+    validateUserId, // User only
+    validateUserOwner, // User only
+    validateUserChanges // User only
 }
