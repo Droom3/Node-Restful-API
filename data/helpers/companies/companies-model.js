@@ -6,6 +6,12 @@ function find() {
         .orderBy('id', 'asc');
 }
 
+function findByUsername(property) {
+    return Companies('companies')
+        .where({ username: property })
+        .first();
+}
+
 function findById(id) {
     return Companies('companies')
         .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
@@ -17,7 +23,8 @@ function add(company) {
     return Companies('companies')
         .insert(company, 'id')
         .then(ids => {
-            return findById(ids);
+            const [id] = ids;
+            return findById(id);
         });
 }
 
@@ -26,7 +33,8 @@ function edit(id, changes) {
         .where({ id })
         .update(changes, 'id')
         .then(ids => {
-            return findById(ids);
+            const [id] = ids;
+            return findById(id);
         });
 }
 
@@ -38,6 +46,7 @@ function remove(id) {
 
 module.exports = {
     find,
+    findByUsername,
     findById,
     add,
     edit,
