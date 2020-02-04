@@ -23,7 +23,7 @@ Request:
 {
   username: "testinguser1", // string (required), must be unique
   password: "testing123!", // string (required) [ 8-20 total characters | min. 1 special character | min. 1 digit | min. 1 letter]
-  user_type: 1, // integer (required) [ must be a valid role id, 1 for jobseeker or 2 for company]
+  user_type: 1, // boolean (required) [ must be a valid role id, 1 for job users or 0 for company]
   name: "Test User", // string (required)
   experience: "", // string (optional)
   industry: "", //string (optional)
@@ -34,13 +34,13 @@ Response:
 
 ```javascript
 {
-    "id": 6,
-    "username": "testinguser5",
-    "user_type": true, // Boolean of 1
-    "name": "Test User",
-    "experience": null,
-    "industry": null,
-    "imgUrl": null
+    id: 6,
+    username: "testinguser5",
+    user_type: true, // Boolean of 1
+    name: "Test User",
+    experience: "",
+    industry: "",
+    imgUrl: ""
 }
 ```
 
@@ -56,7 +56,7 @@ Request:
 {
   username: "somecompany", // string (required), must be unique
   password: "testing123!", // string (required) [ 8-20 total characters | min. 1 special character | min. 1 digit | min. 1 letter]
-  user_type: 0, // integer (required) [ must be a valid role id, 1 for jobseeker or 2 for company]
+  user_type: 0, // boolean (required) [ must be a valid role id, 1 for job users or 0 for company]
   company_name: "Some Company", // string (required), must be unique
   description: "This is a placeholding company" // string (required)
   industry: "", // string (optional)
@@ -69,15 +69,15 @@ Response:
 
 ```javascript
 {
-    "id": 12,
-    "username": "somecompany",
-    "user_type": false, // Boolean of 0
-    "company_name": "Some Company",
-    "description": "This is a placeholding company",
-    "industry": "",
-    "mission_statement": "",
-    "imgUrl": "",
-    "openPositions": ""
+    id: 12,
+    username: "somecompany",
+    user_type: false, // Boolean of 0
+    company_name: "Some Company",
+    description: "This is a placeholding company",
+    industry: "",
+    mission_statement: "",
+    imgUrl: "",
+    openPositions: ""
 }
 ```
 
@@ -126,12 +126,40 @@ Request:
 ```
 Response:
 ```javascript
-// Nothing for now, work in progress
+[
+    {
+        "id": 1,
+        "username": "jonathanchen",
+        "user_type": true,
+        "name": "Jonathan Chen",
+        "experience": "Buidling some terminal game from Java",
+        "industry": "Technology",
+        "imgUrl": ""
+    },
+    {
+        "id": 2,
+        "username": "jonahaitchison",
+        "user_type": true,
+        "name": "Jonah Aitchison",
+        "experience": "Sleep in the day away, coding and building things",
+        "industry": "Technology",
+        "imgUrl": ""
+    },
+    {
+        "id": 3,
+        "username": "devindias",
+        "user_type": true,
+        "name": "Devin Dias",
+        "experience": "Building lots of servers",
+        "industry": "Technology",
+        "imgUrl": ""
+    }
+]
 ```
 
 #### GET *api/users/:id*
 
-Return a jobseeker object at the specified id.
+Return a user object at the specified id.
 
 Request:
 ```javascript
@@ -139,20 +167,37 @@ Request:
 ```
 Response:
 ```javascript
-// Nothing for now, work in progress
+    {
+        "id": 1,
+        "username": "jonathanchen",
+        "user_type": true,
+        "name": "Jonathan Chen",
+        "experience": "Buidling some terminal game from Java",
+        "industry": "Technology",
+        "imgUrl": ""
+    },
 ```
 #### PUT *api/users/:id*
 
-Updating an user profile. You must be logged in as owner of the user account.
-You cannot modify id, username, password, or user_type
+Updating an user profile. You must be logged in as owner of the user account. You cannot modify id, username, password, or user_type. Only required field is name. Other fields are optional.
 
 Request:
 ```javascript
-// No input needed
+{
+	"name": "Jonathan Chen" // required
+}
 ```
 Response:
 ```javascript
-// Nothing for now, work in progress
+{
+    "id": 1,
+    "username": "jonathanchen",
+    "user_type": true,
+    "name": "Jonathan Chen",
+    "experience": "Buidling some terminal game from Java",
+    "industry": "Technology",
+    "imgUrl": ""
+}
 ```
 
 ## **Company Routes**
@@ -230,22 +275,29 @@ Response:
 
 #### PUT *api/companies/:id*
 
-Updating a company profile. You must be logged in as owner of the company.
-You cannot modify id, username, password, or user_type
+Updating a company profile. You must be logged in as owner of the company. Only company_name and description are required, other fields are optional. You cannot modify id, username, password, or user_type
 
 Request:
+
 ```javascript
-// No input needed
+{
+    company_name: "Test Company", // required
+    description: "Just another company for edit testing", // required
+    industry: "Testing", // optional
+    mission_statement: "", // optional
+    imgUrl: "", //optional
+    openPositions: "" // optional
+}
 ```
 Response:
 ```javascript
 {
-    "company_name": "Lambda School", // required
-    "description": "Testing a random description here", // required
-    "industry": "Education", // optional
-    "mission_statement": "Revolutionazing education. Your new career starts here.", // optional
-    "imgUrl": "", // optional
-    "openPositions": "Teachers, Developers" // optional
+    company_name: "Lambda School", // required
+    description: "Testing a random description here", // required
+    industry: "Education", // optional
+    mission_statement: "Revolutionazing education. Your new career starts here.", // optional
+    imgUrl: "", // optional
+    openPositions: "Teachers, Developers" // optional
 }
 ```
 
