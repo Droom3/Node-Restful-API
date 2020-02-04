@@ -28,11 +28,9 @@ function add(user) {
         });
 }
 
-async function edit(id, changes) {
-    await Users('users')
-        .where({ id })
-        .update(changes);
-    
+const change = async (id, changes) => {
+    console.log(changes);
+    await findById(id).update(changes);
     return findById(id);
 }
 
@@ -47,6 +45,6 @@ module.exports = {
     findByUsername,
     findById,
     add,
-    edit,
+    change,
     remove
 }
