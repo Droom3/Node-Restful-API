@@ -77,21 +77,52 @@ Request:
 ```
 Response:
 ```javascript
-// N/A
+[
+    {
+        "user_id": 1,
+        "first_name": "Jonathan",
+        "last_name": "Chen",
+        "occupation": "Student",
+        "experience": "Years of Java programming",
+        "interest": "Coding, cooking, backpacking"
+    },
+    {
+        "user_id": 2,
+        "first_name": "Jonah",
+        "last_name": "Aitchison",
+        "occupation": "Student",
+        "experience": "Cold Fusion Developer",
+        "interest": ""
+    },
+    {
+        "user_id": 3,
+        "first_name": "Devin",
+        "last_name": "Dias",
+        "occupation": "Team Lead",
+        "experience": "Team lead at Lambda School",
+        "interest": ""
+    }
+]
 ```
 
-#### POST *api/jobseekers*
+#### GET *api/jobseekers/:id*
 
-Creates a new jobseeker profile.
-Returns the newly created profile
+Return a jobseeker object at the specified id
 
 Request:
 ```javascript
-// N/A
+// No input needed
 ```
 Response:
 ```javascript
-// N/A
+{
+    "first_name": "Jonathan",
+    "last_name": "Chen",
+    "occupation": "Student",
+    "experience": "Years of Java programming",
+    "interest": "Coding, cooking, backpacking",
+    "user_id": 1
+}
 ```
 
 ## **Company Routes**
@@ -107,21 +138,40 @@ Request:
 ```
 Response:
 ```javascript
-// N/A
+[
+    {
+        "user_id": 4,
+        "company_name": "Lambda School",
+        "description": "A new way of schooling"
+    },
+    {
+        "user_id": 5,
+        "company_name": "Apple Inc.",
+        "description": "Creating the best products for you"
+    },
+    {
+        "user_id": 6,
+        "company_name": "Google",
+        "description": "The future is forged here"
+    }
+]
 ```
 
-#### POST *api/companies*
+#### GET *api/companies/:id*
 
-Creates a new company profile.
-Returns the newly created profile
+Return a jobseeker object at the specified id
 
 Request:
 ```javascript
-// N/A
+// No input needed
 ```
 Response:
 ```javascript
-// N/A
+{
+    "company_name": "Lambda School",
+    "description": "A new way of schooling",
+    "user_id": 4
+}
 ```
 
 ## **Job Routes**

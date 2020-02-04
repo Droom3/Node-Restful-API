@@ -2,13 +2,20 @@ const Companies = require('../../dbConfig');
 
 function find() {
     return Companies('companies')
-        .select('user_id', 'company_name', 'description')
-        .orderBy('user_id', 'asc');
+        .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
+        .orderBy('id', 'asc');
+}
+
+function findByUsername(property) {
+    return Companies('companies')
+        .where({ username: property })
+        .first();
 }
 
 function findById(id) {
     return Companies('companies')
-        .where({ user_id: id })
+        .select('id', 'username', 'user_type', 'company_name', 'description', 'industry', 'mission_statement', 'imgUrl', 'openPositions')
+        .where({ id: id })
         .first();
 }
 
@@ -16,22 +23,28 @@ function add(company) {
     return Companies('companies')
         .insert(company, 'id')
         .then(ids => {
-            return findById(ids);
+            const [id] = ids;
+            return findById(id);
         });
 }
 
-function edit(id, changes) {
+const change = async (id, changes) => {
+    console.log(changes);
+    await findById(id).update(changes);
+    return findById(id);
+}
+
+function remove(id) {
     return Companies('companies')
         .where({ id })
-        .update(changes, 'id')
-        .then(ids => {
-            return findById(ids);
-        });
+        .del()
 }
 
 module.exports = {
     find,
+    findByUsername,
     findById,
     add,
-    edit
+    change,
+    remove
 }

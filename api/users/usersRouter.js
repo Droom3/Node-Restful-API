@@ -1,20 +1,20 @@
 const router = require('express').Router();
-const { Users, Jobseekers, Companies } = require('../../data/helpers/index');
-const { validateToken, checkUserType, validateOwnership, validateJobseekerId } = require('../middlewares/index');
+const { Users, Companies } = require('../../data/helpers/index');
+const { validateToken } = require('../middlewares/index');
 
 // Return a list of all jobseeker profiles, available to all users
 router.get('/', validateToken, (req, res) => {
-    Jobseekers
+    Users
         .find()
         .then(results => {
             res.status(200).json(results)
         })
         .catch(err => {
-            res.status(500).json({ message: 'failed to retrieve all jobseekers', err})
+            res.status(500).json({ message: 'failed to retrieve all users', err})
         })
 })
 
-// Post a jobseeker profile to list, available to jobseekers only
+// Post a jobseeker profile to list, available to users only
 router.post('/', (req, res) => {
 
 })
@@ -22,7 +22,7 @@ router.post('/', (req, res) => {
 // Return a specific jobseeker profile at id, available to all users
 router.get('/:id', validateToken, validateJobseekerId, (req, res) => {
     const ids = req.params.id;
-    Jobseekers
+    Users
         .findById(ids)
         .then(result => {
             res.status(200).json(result)
