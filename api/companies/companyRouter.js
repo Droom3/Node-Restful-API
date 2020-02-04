@@ -1,8 +1,8 @@
 const router = require('express').Router();
 const { Companies } = require('../../data/helpers/index');
-const { validateToken } = require('../middlewares/index');
+const { validateToken, checkIsCompany, validateCompanyId, validateCompanyOwner, validateCompanyChanges } = require('../middlewares/index');
 
-// Return a list of all companies profiles, available to all users
+// Return a list of all companies profiles, available to users
 router.get('/', validateToken, (req, res) => {
     Companies
         .find()
@@ -14,7 +14,7 @@ router.get('/', validateToken, (req, res) => {
         })
 })
 
-// Return a specific company profile at id, available to all users
+// Return a specific company profile at id, available to users
 router.get('/:id', validateToken, (req, res) => {
     const ids = req.params.id;
     Companies
@@ -32,34 +32,20 @@ router.get('/:id', validateToken, (req, res) => {
         })
 })
 
-
-// Post a company profile to list, available to companies only
-// Need to be logged in, has to be company user
-// Need to verify content of company profiles
-router.post('/', validateToken, (req, res) => {
-    const newCompany = req.body;
-    Companies
-        .add(newCompany)
-        .then(result => res.status(200).json(result))
-        .catch(err => res.status(500).json({ message: 'error adding comanpy', err}));
-})
-
 // Update a company profile, available to owner of the profile only
 // Need to be logged in(with a token), has to be company user, company id should be valid, and should be owner of company
 // Also need to verify content of company profile
-router.put('/:id', validateToken, (req, res) => {
+router.put('/:id', validateToken, checkIsCompany, validateCompanyId, validateCompanyOwner, validateCompanyChanges, (req, res) => {
     const ids = req.params.id;
     const companyUpdates = req.body;
-
     Companies
-        .edit(ids, companyUpdates)
+        .change(ids, companyUpdates)
         .then(result => {
-            res.status(204).json(result)
+            res.status(200).json(result)
         })
         .catch(err => {
             res.status(500).json({ message: 'failed to update company profile', err})
         })
-
 })
 
 // Return all likes for this company, available to owner of the profile id only
