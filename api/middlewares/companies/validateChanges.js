@@ -1,15 +1,17 @@
 function validateChanges(req, res, next) {
-    const { id, username, user_type, password, company_name, description } = req.body;
-    if(Object.entries(id) || Object.entries(username) || Object.entries(user_type) || Object.entries(password)) {
-        res.status(400).json({ message: 'you cannot modify id, username, user_type, or password' })
+    const { id, username, password, user_type, company_name, description } = req.body;
+    if(username || password || id || user_type) {
+        return res.status(400).json({ message: 'you cannot modify id, username, user_type, or password' })
     }
     if(!Object.entries(company_name) || !Object.entries(description)) {
-        res.status(400).json({ message: 'company name and description are needed' })
+        return res.status(400).json({ message: 'company name and description are needed' })
     }
     if(!company_name.length || !description) {
-        res.status(400).json({ message: 'company name description must not be blank' })
+        return res.status(400).json({ message: 'company name description must not be blank' })
     }
-    next();
+    else {
+        next();
+    }
 }
 
 module.exports = validateChanges;
