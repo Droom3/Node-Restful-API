@@ -27,6 +27,13 @@ function findMutualLikes(id) {
 function addMatch(userId, companyId, init) {
     return Matches('match')
         .insert({user_id: userId, company_id: companyId, initiated_by: init})
+        .then(ids => {
+            if(init === 0){
+                return findMatchingUsers(userId);
+            } else {
+                return findMatchingCompanies(companyId);
+            }
+        });
 }
 
 function removeMatch(user, company, init){
