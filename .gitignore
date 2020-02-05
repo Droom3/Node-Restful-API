@@ -104,4 +104,4 @@ dist
 .tern-port
 
 # Sqlite DB files
-.db3
+*.db3
