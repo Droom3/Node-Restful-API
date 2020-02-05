@@ -36,7 +36,7 @@ router.post('/register/company', verifyNewCompany, verifyUniqueName, (req, res) 
 
 router.post('/login', verifyReturnUser, (req, res) => {
     const { username, password } = req.body;
-
+    
     Users.findByUsername(username)
         .then(user => {
             if(user) {
