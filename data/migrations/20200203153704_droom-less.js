@@ -24,7 +24,6 @@ exports.up = function(knex, Promise) {
             tbl.string('imgUrl');
         })
         .createTable('match', tbl => {
-            tbl.increments();
             tbl.integer('user_id')
                 .unsigned()
                 .notNullable()
@@ -43,7 +42,7 @@ exports.up = function(knex, Promise) {
                 .unsigned()
                 .notNullable()
                 .defaultTo(0);
-            //tbl.unique(['user_id', 'company_id', 'initiated_by']);
+            tbl.primary(['user_id', 'company_id', 'initiated_by']);
         })
 };
 
