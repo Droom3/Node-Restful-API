@@ -28,7 +28,6 @@ var upload = multer({
 })
 
 router.post('/', upload.array('photos', 3), function(req, res, next) {
-    //res.status(200).json({ success})
     res.send(`Successfully uploaded ${req.files.length} files`);
 });
 
