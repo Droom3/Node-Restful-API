@@ -1,6 +1,6 @@
 const router = require('express').Router();
 const { Matches } = require('../../data/helpers/index');
-const { validateToken, checkIsUser } = require('../middlewares/index');
+const { validateToken } = require('../middlewares/index');
 
 
 // retrive a list of like of the validated user

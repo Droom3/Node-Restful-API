@@ -1,4 +1,3 @@
-
 exports.up = function(knex) {
     return knex.schema.table('match', tbl => {
         tbl.unique(['user_id', 'company_id', 'initiated_by']);
