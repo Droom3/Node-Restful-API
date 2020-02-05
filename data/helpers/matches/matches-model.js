@@ -11,6 +11,7 @@ function findMatchingCompanies(id) {
 
 // Find all of a company's likes
 function findMatchingUsers(id) {
+    console.log('finding liked users');
     return Matches('match')
         .select('users.id as user_id', 'users.name as user_name', 'users.experience as user_experience')
         .join('users', 'match.user_id', 'users.id')
@@ -18,22 +19,24 @@ function findMatchingUsers(id) {
         .orderBy('match.user_id', 'asc')
 }
 
-// Find mutual likes
-function findMutualLikes(id) {
-
-}
-
 // add a user like/match
 function addMatch(userId, companyId, init) {
+    console.log('userId is ', userId)
+    console.log('companyId is ', companyId)
     return Matches('match')
         .insert({user_id: userId, company_id: companyId, initiated_by: init})
         .then(ids => {
             if(init === 0){
-                return findMatchingUsers(userId);
+                return findMatchingUsers(companyId);
             } else {
-                return findMatchingCompanies(companyId);
+                return findMatchingCompanies(userId);
             }
         });
+}
+
+// Find mutual likes
+function findMutualLikes(id) {
+
 }
 
 function removeMatch(user, company, init){
