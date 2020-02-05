@@ -23,10 +23,6 @@ function findMutualLikes(id) {
 
 }
 
-function removeMeLater() {
-    
-}
-
 // add a user like/match
 function addMatch(userId, companyId, init) {
     return Matches('match')
