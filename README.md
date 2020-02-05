@@ -283,30 +283,25 @@ Request:
 {
     company_name: "Test Company", // required
     description: "Just another company for edit testing", // required
-    industry: "Testing", // optional
-    mission_statement: "", // optional
-    imgUrl: "", //optional
-    openPositions: "" // optional
 }
 ```
 Response:
 ```javascript
 {
-    company_name: "Lambda School", // required
-    description: "Testing a random description here", // required
-    industry: "Education", // optional
-    mission_statement: "Revolutionazing education. Your new career starts here.", // optional
-    imgUrl: "", // optional
-    openPositions: "Teachers, Developers" // optional
-}
+    company_name: "Test Company", 
+    description: "Just another company for edit testing", 
+    industry: "Education", 
+    mission_statement: "Revolutionazing education. Your new career starts here.", 
+    imgUrl: "", 
+    openPositions: "Teachers, Developers" 
 ```
 
 ## **Match Routes**
 [back to top](#api-user-guide)
 
-#### POST *api/matches/:id/likes*
+#### GET *api/matches*
 
-Adding a user or company to your liked list
+Return all liked users or companies associated with the logged in account, identified by the token.
 
 Request:
 ```javascript
@@ -314,5 +309,58 @@ Request:
 ```
 Response:
 ```javascript
-// No response yet, work in progress
+[
+    {
+        "company_id": 2,
+        "company_name": "Apple Inc",
+        "company_description": "Creating the best products for you"
+    },
+    {
+        "company_id": 3,
+        "company_name": "Google Inc",
+        "company_description": "Testing a random description here, another one"
+    }
+]
+```
+
+#### POST *api/matches/:id*
+
+Token will first identify the user or company making this request. This request will add the company or user specified by the id in the URL to the liked list of the logged in user or company. For example, User with id=1 submits a POST request to api/matches/1 will add company with id=1 to their liked list. The request will return a list of all liked users/companies after the adding finishes.
+
+Request:
+```javascript
+// No input needed
+```
+Response:
+```javascript
+[
+    {
+        "company_id": 1,
+        "company_name": "Lambda School",
+        "company_description": "Redefining education"
+    },
+    {
+        "company_id": 2,
+        "company_name": "Apple Inc",
+        "company_description": "Creating the best products for you"
+    },
+    {
+        "company_id": 3,
+        "company_name": "Google Inc",
+        "company_description": "Testing a random description here, another one"
+    }
+]
+```
+
+#### DELETE *api/matches/:id*
+
+Delete a user/company from liked list.
+
+Request:
+```javascript
+// No input needed
+```
+Response:
+```javascript
+// Will return an integer 1
 ```
