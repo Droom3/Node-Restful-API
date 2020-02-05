@@ -1,5 +1,5 @@
 function checkIsUser(req, res, next) {
-    const user_type = req.decoded_token.user_type;
+    const user_type = !!+req.decoded_token.user_type;
     if(user_type===true) {
         next();
     }
