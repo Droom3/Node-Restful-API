@@ -43,6 +43,7 @@ exports.up = function(knex, Promise) {
                 .unsigned()
                 .notNullable()
                 .defaultTo(0);
+            //tbl.unique(['user_id', 'company_id', 'initiated_by']);
         })
 };
 
