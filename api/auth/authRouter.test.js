@@ -1,9 +1,6 @@
 require('dotenv').config();
-
 const request = require('supertest');
-
 const server = require('../server');
-const db = require('../../data/dbConfig');
 
 describe('Authentication', function() {
 
@@ -23,16 +20,14 @@ describe('Authentication', function() {
         const newUser = {
             username: "thetestinguser",
             password: "testing123!",
-            user_type: 1,
+            user_type: true,
             name: "Mr. Test User",
             experience: "a lot... really I have a lot.", 
             industry: "Fashion, food, dancing",
             imgUrl: "https://www2.pictures.zimbio.com/mp/xY7Vx3kjGvml.jpg"
         }
 
-        let userAuth;
-
-        it.skip('register new user', function() {
+        it.skip('register new user', () => {
             return request(server).post('/api/register/user')
                 .send(newUser)
                 .then(res => {
@@ -41,14 +36,14 @@ describe('Authentication', function() {
                 })
         });
 
-        it('login new user', function() {
+        it('login new user', () => {
             return request(server)
                 .post('/api/login')
                 .send({username: newUser.username, password: newUser.password})
                 .then(res => {
                     expect(res.status).toEqual(200);
                     expect(res.type).toMatch(/json/i);
-                    userAuth = res.body.token;
+                    expect(res.body.user.user_type).toBe(1);
                 })
         });
     })
@@ -57,7 +52,7 @@ describe('Authentication', function() {
         const newCompany = {
             username: "somecompany",
             password: "testing123!",
-            user_type: 0,
+            user_type: false,
             company_name: "Some Company",
             description: "This is a placeholding company",
             industry: "Tech, Foodie",
@@ -65,8 +60,6 @@ describe('Authentication', function() {
             imgUrl: "",
             openPositions: "Chef, Fullstack, foodie"
         }
-
-        let compnayAuth;
 
         it.skip('register new company', function() {
             return request(server).post('/api/register/company')
@@ -85,7 +78,6 @@ describe('Authentication', function() {
                     expect(res.status).toEqual(201);
                     expect(res.type).toMatch(/json/i);
                     expect(res.body.company.user_type).toBe(0);
-                    userAuth = res.body.token;
                 })
         })
     })

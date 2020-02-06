@@ -81,12 +81,12 @@ describe('Matches', function() {
     describe('Predefined Users and Companies', function() {
         it('list of users', async function() {
             const userList = await db('users');
-            expect(userList).toHaveLength(3); // three default users
+            expect(userList).toHaveLength(4); // three default users
         })
 
         it('list of companies', async function() {
             const companyList = await db('companies');
-            expect(companyList).toHaveLength(3); // three default companies
+            expect(companyList).toHaveLength(4); // three default companies
         })
     })
 
