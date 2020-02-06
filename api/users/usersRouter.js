@@ -49,11 +49,16 @@ router.put('/:id', validateToken, checkIsUser, validateUserId, validateUserOwner
         .catch(err => res.status(500).json({ message: 'failed to update user.', err}))
 })
 
-// Return all likes for this user, available to owner of the profile id only
-// Don't work on this yet, still thinking about its specifics
-router.get('/:id/likes', (req, res) => {
-
+router.delete('/:id', validateToken, checkIsUser, validateUserId, validateUserOwner, (req, res) => {
+    const ids = req.params.id;
+    Users
+        .remove(ids)
+        .then(() => {
+            res.status(200).json({ message: `user account ${ids} deleted` })
+        })
+        .catch(() => {
+            res.status(500).json({ message: 'unable to delete user account' })
+        })
 })
-
 
 module.exports = router;
